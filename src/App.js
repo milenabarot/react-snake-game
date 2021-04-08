@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useRef, useEffect } from "react";
+import { useInterval } from "./useInterval";
+import {
+  CANVAS_SIZE,
+  SNAKE_START,
+  APPLE_START,
+  SCALE,
+  SPEED,
+  DIRECTIONS,
+} from "./constants";
 
-function App() {
+const App = () => {
+  const startGame = () => {};
+
+  const endGame = () => {};
+
+  const moveSnake = () => {};
+
+  const createApple = () => {};
+
+  const checkCollision = () => {};
+
+  const checkAppleCollision = () => {};
+
+  const gameLoop = () => {};
+
+  useEffect(() => {}, [snake, apple, gameOver]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div role="button" tabIndex="0" onKeyDown={(e) => moveSnake(e)}>
+      <canvas
+        style={{ border: "2px solid darkBlue" }}
+        ref={canvasRef}
+        width={`${CANVAS_SIZE[0]}px`}
+        height={`${CANVAS_SIZE[1]}px`}
+      />
+      {gameOver && <div>GAME OVER! </div>}
+      <button onClick={startGame}>Start Game</button>
     </div>
   );
-}
+};
 
 export default App;
