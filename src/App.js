@@ -16,32 +16,85 @@ const App = () => {
   const [directions, setDirections] = useState([0, -1]);
   const [speed, setSpeed] = useState(null);
   const [gameOver, setGameover] = useState(false);
+  const [prevSpeed, setPrevSpeed] = useState(null);
+  const [isPaused, setIsPaused] = useState(false);
 
-  const startGame = () => {};
+  const startGame = () => {
+    setSnake(SNAKE_START);
+    setApple(APPLE_START);
+    setDirections([0, -1]);
+    setSpeed(SPEED);
+    setGameover(false);
+  };
 
-  const pauseGame = () => {};
+  const pauseGame = () => {
+    if (speed !== null) {
+      setPrevSpeed(speed);
+      setSpeed(null);
+      setIsPaused(true);
+    } else {
+      setSpeed(prevSpeed);
+      setIsPaused(false);
+    }
+  };
 
-  const endGame = () => {};
+  const endGame = () => {
+    setSpeed(null);
+    setGameover(true);
+  };
 
   const moveSnake = ({ keyCode }) => {
     keyCode >= 37 && keyCode <= 40 && setDirections(DIRECTIONS[keyCode]);
   };
 
-  const createApple = () => {};
+  // generating random numbers for x and y co-ords in apple array
+  const createApple = () =>
+    apple.map((_, i) => Math.floor((Math.random() * CANVAS_SIZE[i]) / SCALE));
 
-  const checkCollision = () => {};
+  // wall collision detection, check if head of snake is colliding with the outside of canvas- piece
+  const checkCollision = (piece, snk = snake) => {
+    if (
+      piece[0] * SCALE >= CANVAS_SIZE[0] ||
+      piece[0] < 0 ||
+      piece[1] * SCALE >= CANVAS_SIZE[1] ||
+      piece[1] < 0
+    )
+      return true;
+    // collision with the snake itself- to detect if we turn around and collide with the tail
+    for (const segment of snk) {
+      if (piece[0] === segment[0] && piece[1] === segment[1]) return true;
+    }
 
-  const checkAppleCollision = () => {};
+    return false;
+  };
+
+  const checkAppleCollision = (newSnake) => {
+    if (newSnake[0][0] === apple[0] && newSnake[0][1] === apple[1]) {
+      let newApple = createApple();
+      while (checkCollision(newApple, newSnake)) {
+        newApple = createApple();
+      }
+      setApple(newApple);
+      return true;
+    }
+    return false;
+  };
 
   const gameLoop = () => {
-    // const snakeCopy = JSON.parse(JSON.stringify(snake));
     const snakeCopy = [...snake];
     const newSnakeHead = [
       snakeCopy[0][0] + directions[0],
       snakeCopy[0][1] + directions[1],
     ];
     snakeCopy.unshift(newSnakeHead);
-    snakeCopy.pop();
+    if (checkCollision(newSnakeHead)) endGame();
+    if (checkAppleCollision(snakeCopy)) {
+      // do nothing because snake needs to grow when colliding with apple
+    } else {
+      snakeCopy.pop();
+      // pop becuase if you ahven't collided witht eh apple the game continues, ie the back of the snake gets knocked off
+      // and an additional point gets added in front
+    }
     setSnake(snakeCopy);
   };
 
@@ -69,7 +122,7 @@ const App = () => {
       />
       {gameOver && <div>GAME OVER! </div>}
       <button onClick={startGame}>Start Game</button>
-      <button onClick={pauseGame}>Pause Game</button>
+      <button onClick={pauseGame}>{isPaused ? `Resume` : `Pause`} Game</button>
     </div>
   );
 };
