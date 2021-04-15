@@ -8,6 +8,13 @@ import {
   SPEED,
   DIRECTIONS,
 } from "./constants";
+import upArrow from "./images/upArrow.png";
+import downArrow from "./images/downArrow.png";
+import rightArrow from "./images/rightArrow.png";
+import leftArrow from "./images/leftArrow.png";
+import pauseIcon from "./images/pauseIcon.png";
+
+import "../src/styles/app.css";
 
 const App = () => {
   const canvasRef = useRef();
@@ -19,7 +26,15 @@ const App = () => {
   const [prevSpeed, setPrevSpeed] = useState(null);
   const [isPaused, setIsPaused] = useState(false);
 
-  const startGame = () => {
+  const keyArray = [
+    { text: "Up", icon: upArrow },
+    { text: "Down", icon: downArrow },
+    { text: "Right", icon: rightArrow },
+    { text: "Left", icon: leftArrow },
+    { text: "Pause", icon: pauseIcon },
+  ];
+
+  const startGame = (event) => {
     setSnake(SNAKE_START);
     setApple(APPLE_START);
     setDirections([0, -1]);
@@ -38,13 +53,32 @@ const App = () => {
     }
   };
 
+  const pauseOnPKey = (event) => {
+    if (event.key === "p") {
+      pauseGame();
+    }
+  };
+
   const endGame = () => {
     setSpeed(null);
     setGameover(true);
   };
 
+  // to ensure the game doesn't end if you press a key thats going in the
+  // opposite direction of where you are currently going
+
   const moveSnake = ({ keyCode }) => {
-    keyCode >= 37 && keyCode <= 40 && setDirections(DIRECTIONS[keyCode]);
+    if (keyCode === 40 && String([directions]) === String([0, -1])) {
+      return;
+    } else if (keyCode === 37 && String([directions]) === String([1, 0])) {
+      return;
+    } else if (keyCode === 39 && String([directions]) === String([-1, 0])) {
+      return;
+    } else if (keyCode === 38 && String([directions]) === String([0, 1])) {
+      return;
+    } else {
+      keyCode >= 37 && keyCode <= 40 && setDirections(DIRECTIONS[keyCode]);
+    }
   };
 
   // generating random numbers for x and y co-ords in apple array
@@ -92,7 +126,7 @@ const App = () => {
       // do nothing because snake needs to grow when colliding with apple
     } else {
       snakeCopy.pop();
-      // pop becuase if you ahven't collided witht eh apple the game continues, ie the back of the snake gets knocked off
+      // pop becuase if you haven't collided with the apple the game continues, ie the back of the snake gets knocked off
       // and an additional point gets added in front
     }
     setSnake(snakeCopy);
@@ -113,7 +147,15 @@ const App = () => {
   useInterval(() => gameLoop(), speed);
 
   return (
-    <div role="button" tabIndex="0" onKeyDown={(e) => moveSnake(e)}>
+    <div
+      className="gameWrap"
+      role="button"
+      tabIndex="0"
+      onKeyDown={(e) => moveSnake(e)}
+      onKeyPress={(event) => {
+        pauseOnPKey(event);
+      }}
+    >
       <canvas
         style={{ border: "2px solid darkBlue" }}
         ref={canvasRef}
@@ -123,6 +165,19 @@ const App = () => {
       {gameOver && <div>GAME OVER! </div>}
       <button onClick={startGame}>Start Game</button>
       <button onClick={pauseGame}>{isPaused ? `Resume` : `Pause`} Game</button>
+      <ul className="keyArray">
+        {keyArray.map((key) => {
+          return (
+            <li className="keyArrayItems">
+              {key.text}
+              <div
+                className="keyArrayImage"
+                style={{ backgroundImage: `url(${key.icon})` }}
+              ></div>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 };
