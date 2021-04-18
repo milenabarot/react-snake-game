@@ -1,3 +1,11 @@
+* {
+  font-family: "Courier New", Courier, monospace;
+}
+
+body {
+  background-color: rgb(100, 213, 207);
+}
+
 .gameWrap {
   display: flex;
   justify-content: center;
@@ -5,20 +13,61 @@
   flex-direction: column;
 }
 
+.canvas {
+  border: 3px solid grey;
+  box-shadow: 1px 5px 10px 8px gray;
+  border-radius: 10px;
+  background-color: rgb(242, 248, 248);
+  margin-top: 100px;
+}
+
+.gameButtonsWrap {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.gameButtonsWrap button {
+  border: none;
+  background-color: lightskyblue;
+  margin-top: 15px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  font-size: 25px;
+}
+
+.gameButtonsWrap button:hover {
+  transform: scale(1.2);
+}
+
 .keyArray {
   display: flex;
   justify-content: center;
-  flex-direction: row;
+  flex-direction: column;
+  font-size: 20px;
+  padding: 0px 60px;
+}
+
+.keyArray p {
+  text-align: center;
+  font-weight: bold;
 }
 
 .keyArrayItems {
   list-style: none;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+
+.keyArrayItems:not(:first-of-type) {
+  margin-top: 10px;
 }
 
 .keyArrayImage {
   height: 30px;
   width: 30px;
   background-size: contain;
+  margin-left: 40px;
+  background-repeat: no-repeat;
 }

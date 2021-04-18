@@ -157,15 +157,21 @@ const App = () => {
       }}
     >
       <canvas
-        style={{ border: "2px solid darkBlue" }}
         ref={canvasRef}
         width={`${CANVAS_SIZE[0]}px`}
         height={`${CANVAS_SIZE[1]}px`}
+        className="canvas"
       />
-      {gameOver && <div>GAME OVER! </div>}
-      <button onClick={startGame}>Start Game</button>
-      <button onClick={pauseGame}>{isPaused ? `Resume` : `Pause`} Game</button>
+      <div className="gameButtonsWrap">
+        {gameOver && <div>GAME OVER! </div>}
+        <button onClick={startGame}>Start Game</button>
+        <button onClick={pauseGame}>
+          {isPaused ? `Resume` : `Pause`} Game
+        </button>
+      </div>
+
       <ul className="keyArray">
+        <p>Key</p>
         {keyArray.map((key) => {
           return (
             <li className="keyArrayItems">
