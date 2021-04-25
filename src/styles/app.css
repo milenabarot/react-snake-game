@@ -40,7 +40,7 @@ body {
   transform: scale(1.2);
 }
 
-.keyArray {
+.keys {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -50,23 +50,23 @@ body {
   right: 5%;
 }
 
-.keyArray p {
+.keys p {
   text-align: center;
   font-weight: bold;
 }
 
-.keyArrayItems {
+.keyItem {
   list-style: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.keyArrayItems:not(:first-of-type) {
+.keyItem:not(:first-of-type) {
   margin-top: 10px;
 }
 
-.keyArrayImage {
+.keyImage {
   height: 30px;
   width: 30px;
   background-size: contain;

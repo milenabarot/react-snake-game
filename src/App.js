@@ -26,7 +26,7 @@ const App = () => {
   const [prevSpeed, setPrevSpeed] = useState(null);
   const [isPaused, setIsPaused] = useState(false);
 
-  const keyArray = [
+  const keys = [
     { text: "Up", icon: upArrow },
     { text: "Down", icon: downArrow },
     { text: "Right", icon: rightArrow },
@@ -172,14 +172,14 @@ const App = () => {
         </button>
       </div>
 
-      <ul className="keyArray">
+      <ul className="keys">
         <p>Key</p>
-        {keyArray.map((key) => {
+        {keys.map((key) => {
           return (
-            <li className="keyArrayItems">
+            <li className="keyItem">
               {key.text}
               <div
-                className="keyArrayImage"
+                className="keyImage"
                 style={{ backgroundImage: `url(${key.icon})` }}
               ></div>
             </li>
