@@ -18,13 +18,13 @@ body {
   box-shadow: 1px 5px 10px 8px gray;
   border-radius: 10px;
   background-color: rgb(242, 248, 248);
-  margin-top: 100px;
+  margin-top: 5px;
 }
 
 .gameButtonsWrap {
-  margin-top: 30px;
   display: flex;
   flex-direction: column;
+  margin-top: 20px;
 }
 
 .gameButtonsWrap button {
@@ -46,6 +46,8 @@ body {
   flex-direction: column;
   font-size: 20px;
   padding: 0px 60px;
+  position: absolute;
+  right: 5%;
 }
 
 .keyArray p {
@@ -70,4 +72,9 @@ body {
   background-size: contain;
   margin-left: 40px;
   background-repeat: no-repeat;
+}
+
+.gameOver {
+  position: absolute;
+  font-size: 20px;
 }

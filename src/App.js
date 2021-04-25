@@ -136,11 +136,13 @@ const App = () => {
     const context = canvasRef.current.getContext("2d");
     context.setTransform(SCALE, 0, 0, SCALE, 0, 0);
     context.clearRect(0, 0, CANVAS_SIZE[0], CANVAS_SIZE[1]);
-    context.fillStyle = "pink";
-    snake.forEach(([x, y]) => {
+
+    snake.forEach(([x, y], index) => {
+      context.fillStyle = index % 2 === 0 ? "pink" : "purple";
       context.fillRect(x, y, 1, 1);
     });
-    context.fillStyle = "lightblue";
+
+    context.fillStyle = snake.length % 2 === 0 ? "mediumseagreen" : "";
     context.fillRect(apple[0], apple[1], 1, 1);
   }, [snake, apple, gameOver]);
 
@@ -156,6 +158,7 @@ const App = () => {
         pauseOnPKey(event);
       }}
     >
+      {gameOver && <p className="gameOver">GAME OVER! </p>}
       <canvas
         ref={canvasRef}
         width={`${CANVAS_SIZE[0]}px`}
@@ -163,7 +166,6 @@ const App = () => {
         className="canvas"
       />
       <div className="gameButtonsWrap">
-        {gameOver && <div>GAME OVER! </div>}
         <button onClick={startGame}>Start Game</button>
         <button onClick={pauseGame}>
           {isPaused ? `Resume` : `Pause`} Game
