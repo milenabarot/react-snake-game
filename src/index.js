@@ -5,7 +5,7 @@ import AppClass from "./AppClass";
 
 ReactDOM.render(
   <>
-    {/* <App /> */}
+    <App />
     <AppClass />
   </>,
   document.getElementById("root")
