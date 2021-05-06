@@ -142,7 +142,7 @@ const App = () => {
       context.fillRect(x, y, 1, 1);
     });
 
-    context.fillStyle = snake.length % 2 === 0 ? "mediumseagreen" : "";
+    context.fillStyle = snake.length % 2 === 0 ? "mediumseagreen" : "crimson";
     context.fillRect(apple[0], apple[1], 1, 1);
   }, [snake, apple, gameOver]);
 
